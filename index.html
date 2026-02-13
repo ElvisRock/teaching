@@ -49,5 +49,90 @@
     <img src="Pictures/Foto-do-Grupo-Outtubro2022.png" alt="Foto do grupo - Outubro 2022">
     <img src="Pictures/Foto-do-Grupo-Maio-2023.png" alt="Foto do grupo - Maio 2023">
   </div>
+
+<div class="scroll-gap" aria-hidden="true"></div>
+
+<!-- =============================== -->
+<!-- PAGE 2 (nova página abaixo)     -->
+<!-- Background transition: azul     -->
+<!-- =============================== -->
+<section class="page2" id="page2" aria-label="Second page">
+  <h1>Training</h1>
+  <br><br>
+
+
+  <p class="intro1">
+    Learn Data Analytics the practical way with real-world scenarios.
+  </p>
+
+
+  <p class="project">
+    My training focuses on hands-on experience, business thinking and real data problems, not just theory.
+  </p>
+
+
+  <p class="project">
+    <strong>Training</strong><br>
+    Power BI, Tableau, Metabase, SQL & Python<br>
+    
+  
+  </p>
+
+  <p class="project">
+    Designed for students, professionals and teams who want to understand how data is actually used in business.
+  </p>
+
+  <p class="project">
+    <strong>Training format:</strong><br>
+    · Group sessions · Corporate training · Online / In-person
+  </p>
+
+<br><br>
+  <div class="cta-container">
+    <a class="cta-button" href="https://www.linkedin.com/in/elvis-monteiro/" target="_blank">
+      Contact me
+    </a>
+  </div>
+
+</section>
+
+<script>
+  // Scroll-driven background transition (V2 progressivo)
+  // Conforme o usuário rola em direção à Page 2, aumentamos --scroll-progress (0 -> 1).
+  (function () {
+    const page2 = document.getElementById('page2');
+    const gap = document.querySelector('.scroll-gap');
+    if (!page2 || !gap) return;
+
+    const clamp01 = (v) => Math.max(0, Math.min(1, v));
+
+    function update() {
+      // Começa a transição no meio do gap e termina quando a Page 2 ocupa ~35% da tela
+      const gapRect = gap.getBoundingClientRect();
+      const p2Rect = page2.getBoundingClientRect();
+
+      const viewportH = window.innerHeight || document.documentElement.clientHeight;
+
+      // start: quando o final do gap está a 90% do viewport
+      const start = viewportH * 0.90;
+      // end: quando o topo da Page 2 chega a 25% do viewport
+      const end = viewportH * 0.25;
+
+      // usamos a posição do topo da Page 2 como referência
+      const t = (start - p2Rect.top) / (start - end);
+      const progress = clamp01(t);
+
+      document.documentElement.style.setProperty('--scroll-progress', progress.toFixed(4));
+
+      // Troca de texto (para não ficar cinza em cima do fundo escuro)
+      document.body.classList.toggle('deep-text', progress > 0.65);
+    }
+
+    // Atualiza no scroll e resize
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+  })();
+</script>
 </body>
 </html>
