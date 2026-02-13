@@ -96,3 +96,93 @@ hr {
   border-radius: 4px;
   flex: 0 0 auto;
 }
+
+/* ===============================
+   V2: Scroll-driven background transition (progressivo)
+   - Mantém a primeira página como está (branca)
+   - Conforme o usuário rola da Page 1 -> Page 2, o fundo muda GRADUALMENTE
+   - Usa CSS variables atualizadas via JS (sem travar)
+   =============================== */
+
+:root {
+  --bg-top: #01020a;
+  --bg-bottom: #1c447f;
+  --scroll-progress: 0; /* 0 -> 1 */
+}
+
+/* Base continua branca; o "fundo final" é aplicado via ::before com opacidade */
+body {
+  background: #ffffff;
+  transition: color 500ms ease;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Layer do gradiente (controlado por opacidade) */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(to bottom, var(--bg-top), var(--bg-bottom));
+  opacity: var(--scroll-progress);
+  transition: opacity 80ms linear; /* suave e responsivo */
+  pointer-events: none;
+}
+
+/* Cor do texto interpola "de leve" quando chega na Page 2 */
+body.deep-text {
+  color: rgba(255, 255, 255, 0.92);
+}
+
+/* Segunda página: mantém a mesma "formação" (centro, larguras, etc.) */
+.page2 {
+  margin-top: 70px;
+  padding-top: 10px;
+}
+
+/* Ajustes de cor na Page 2 (quando já estiver no tema escuro) */
+body.deep-text .page2 .intro1,
+body.deep-text .page2 .project,
+body.deep-text .page2 .highlight {
+  color: rgba(255, 255, 255, 0.80);
+}
+
+body.deep-text .page2 hr {
+  border-top-color: rgba(255, 255, 255, 0.22);
+}
+
+body.deep-text .page2 .project a {
+  color: rgba(255, 255, 255, 0.92);
+}
+
+/* "Respiro" no fim da primeira página para a transição ficar perceptível */
+.scroll-gap {
+  height: 28vh;
+}
+
+/* ===============================
+   Training CTA Button
+   =============================== */
+
+.cta-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+.cta-button {
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.25);
+  padding: 14px 28px;
+  border-radius: 8px;
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+  transition: all 0.25s ease;
+}
+
+.cta-button:hover {
+  background: rgba(255,255,255,0.22);
+  transform: translateY(-2px);
+}
